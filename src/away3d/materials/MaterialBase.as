@@ -15,10 +15,11 @@ package away3d.materials
 	import away3d.materials.passes.DepthMapPass;
 	import away3d.materials.passes.DistanceMapPass;
 	import away3d.materials.passes.MaterialPassBase;
-
+	
 	import flash.display.BlendMode;
 	import flash.display3D.Context3D;
 	import flash.display3D.Context3DBlendFactor;
+	import flash.display3D.Context3DCompareMode;
 	import flash.events.Event;
 
 	use namespace arcane;
@@ -63,6 +64,7 @@ package away3d.materials
 		protected var _mipmap : Boolean = true;
 		protected var _smooth : Boolean = true;
 		protected var _repeat : Boolean;
+		protected var _depthCompareMode:String = Context3DCompareMode.LESS;
 
 		protected var _depthPass : DepthMapPass;
 		protected var _distancePass : DistanceMapPass;
@@ -141,6 +143,17 @@ package away3d.materials
 		{
 			_smooth = value;
 			for (var i : int = 0; i < _numPasses; ++i) _passes[i].smooth = value;
+		}
+		
+		public function get depthCompareMode() : String
+		{
+			return _depthCompareMode;
+		}
+		
+		public function set depthCompareMode(value : String) : void
+		{
+			_depthCompareMode = value;
+			for (var i : int = 0; i < _numPasses; ++i) _passes[i].depthCompareMode = value;
 		}
 
 		/**
@@ -469,6 +482,7 @@ package away3d.materials
 			pass.mipmap = _mipmap;
 			pass.smooth = _smooth;
 			pass.repeat = _repeat;
+			pass.depthCompareMode = _depthCompareMode;
 			pass.numPointLights = _lightPicker? _lightPicker.numPointLights : 0;
 			pass.numDirectionalLights = _lightPicker? _lightPicker.numDirectionalLights : 0;
 			pass.numLightProbes = _lightPicker? _lightPicker.numLightProbes : 0;
