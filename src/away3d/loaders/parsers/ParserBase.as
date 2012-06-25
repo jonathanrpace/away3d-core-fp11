@@ -147,7 +147,7 @@ package away3d.loaders.parsers
 		 * actual time spent on a frame can exceed this number since time-checks can
 		 * only be performed between logical sections of the parsing procedure.
 		 */
-		public function parseAsync(data : *, frameLimit : Number = 300) : void
+		public function parseAsync(data : *, frameLimit : Number = 30) : void
 		{
 			_data = data;
 			
@@ -296,12 +296,7 @@ package away3d.loaders.parsers
 		 */
 		protected function hasTime() : Boolean
 		{
-			var elapsedTime:int = getTimer() - _lastFrameTime;
-			trace("elapsedTime : " + elapsedTime)
-			trace("frameLimit : " + _frameLimit);
-			return elapsedTime < _frameLimit;
-			
-			//return ((getTimer() - _lastFrameTime) < _frameLimit);
+			return ((getTimer() - _lastFrameTime) < _frameLimit);
 		}
 		
 		/**
