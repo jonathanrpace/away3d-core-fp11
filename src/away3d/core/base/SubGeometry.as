@@ -655,7 +655,7 @@
 			var lenV : uint = _vertices.length;
 
 			// reset, yo
-			if (_vertexNormals) while (v1 < lenV) _vertexNormals[v1++] = 0.0;
+			if (_vertexNormals && _vertexNormals.length == lenV) while (v1 < lenV) _vertexNormals[v1++] = 0.0;
 			else _vertexNormals = new Vector.<Number>(_vertices.length, true);
 
 			var i : uint, k : uint;
@@ -775,8 +775,15 @@
 			var cx : Number, cy : Number, cz : Number;
 			var d : Number;
 
-			_faceNormalsData ||= new Vector.<Number>(len, true);
-			if (_useFaceWeights) _faceWeights ||= new Vector.<Number>(len/3, true);
+			if ( _faceNormalsData == null || len != _faceNormalsData.length )
+			{
+				_faceNormalsData = new Vector.<Number>(len, true);
+			}
+			
+			if ( _useFaceWeights && (_faceNormalsData == null || len != _faceNormalsData.length) )
+			{
+				_faceWeights = new Vector.<Number>(len/3, true);
+			}
 
 			while (i < len) {
 				index = _indices[i++]*3;
